@@ -1,14 +1,17 @@
 import express from "express";
-import { AppDataSource } from "./data-source.js"; // Note the .js extension!
+import { AppDataSource } from "./data-source.js";
+import ticketRoutes from "./routes/ticket.routes.js"; // <--- 1. Import
 
 const app = express();
 app.use(express.json());
+
+// <--- 2. Register the routes
+app.use("/api/tickets", ticketRoutes);
 
 app.get("/", (req, res) => {
   res.send("Ticketing System API (ESM) is running!");
 });
 
-// Initialize the Database connection
 AppDataSource.initialize()
   .then(() => {
     console.log("Data Source has been initialized! 📦");
